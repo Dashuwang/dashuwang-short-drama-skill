@@ -1,0 +1,11 @@
+{
+  "asset_id": "ASSET_ID_V1",
+  "asset_name": "",
+  "canonical_key": "asset.canonical.identity",
+  "asset_type": "character",
+  "importance": "A",
+  "status": "draft",
+  "version": "V1",
+  "used_in": [],
+  "supersedes": null
+}

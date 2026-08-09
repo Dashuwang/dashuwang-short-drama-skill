@@ -1,0 +1,10 @@
+{
+  "module_name": "prompt_engine",
+  "version": "V0.1",
+  "description": "从镜头数据库生成视频模型提示词的表达层接口",
+  "status": "interface_only",
+  "input": ["shot_database", "asset_registry", "project_config"],
+  "output": ["self_prompt", "control_prompt", "prompt_record"],
+  "dependencies": ["shot_schema", "prompt_schema"]
+}
+

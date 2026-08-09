@@ -1,0 +1,9 @@
+{
+  "module_name": "model_adapter",
+  "version": "V0.1",
+  "description": "把通用视频提示词转换为目标模型兼容表达的适配接口",
+  "status": "interface_only",
+  "input": ["prompt_record", "video_model", "model_constraints"],
+  "output": ["adapted_prompt", "parameter_plan", "compatibility_notes"],
+  "dependencies": ["prompt_schema"]
+}

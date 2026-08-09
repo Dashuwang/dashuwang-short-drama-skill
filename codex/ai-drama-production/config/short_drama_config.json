@@ -1,0 +1,8 @@
+{
+  "extends": "default_config.json",
+  "production_mode": "short_drama",
+  "orientation": "9:16",
+  "episode_pacing": "high_conflict",
+  "shot_target_seconds": 15,
+  "require_episode_cliffhanger": true
+}

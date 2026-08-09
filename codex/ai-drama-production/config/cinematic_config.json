@@ -1,0 +1,8 @@
+{
+  "extends": "default_config.json",
+  "production_mode": "cinematic_drama",
+  "orientation": "16:9",
+  "episode_pacing": "cinematic",
+  "shot_target_seconds": 15,
+  "require_episode_cliffhanger": false
+}

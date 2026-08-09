@@ -1,0 +1,19 @@
+{
+  "project_id": "PROJECT_ID",
+  "project_name": "PROJECT_NAME",
+  "season": 1,
+  "genre": "",
+  "production_mode": "short_drama",
+  "prompt_mode": "dual",
+  "video_model": { "name": "unselected", "version": "" },
+  "modules": {
+    "adaptation": "V0.1",
+    "asset_analysis": "V0.1",
+    "rune_generation": "V0.1",
+    "shot_design": "V0.1",
+    "prompt_engine": "V0.1",
+    "model_adapter": "V0.1"
+  },
+  "global_style": {},
+  "status": { "current_phase": "initialization", "version": "V0.1" }
+}

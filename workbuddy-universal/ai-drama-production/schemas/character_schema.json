@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "character_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "role_type": { "type": "string" },
+    "importance": { "type": "string", "enum": ["main", "support", "minor"] },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "occupation": { "type": "string" },
+        "background": { "type": "string" },
+        "faction": { "type": "string" }
+      }
+    },
+    "personality": {
+      "type": "object",
+      "properties": {
+        "core_traits": { "type": "array", "items": { "type": "string" } },
+        "goals": { "type": "array", "items": { "type": "string" } },
+        "conflicts": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "assets": {
+      "type": "object",
+      "properties": {
+        "character_rune": { "type": "string" },
+        "costume_rune": { "type": "string" },
+        "voice_rune": { "type": "string" },
+        "performance_rune": { "type": "string" }
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state_id": { "type": "string" },
+          "name": { "type": "string" },
+          "emotion": { "type": "string" },
+          "trigger": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["state_id", "name"]
+      }
+    },
+    "relationships": { "type": "array", "items": { "type": "string" } },
+    "version": { "type": "string" }
+  },
+  "required": ["character_id", "name", "importance", "version"]
+}

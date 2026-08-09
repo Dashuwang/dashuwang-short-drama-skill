@@ -1,0 +1,10 @@
+{
+  "module_name": "asset_analysis",
+  "version": "V0.2",
+  "description": "从脚本判断必要符、复用与升版",
+  "status": "testing",
+  "input": ["approved_script", "existing_asset_registry"],
+  "output": ["required_runes", "production_gate"],
+  "dependencies": ["asset_analysis_result_schema", "asset_registry_schema"],
+  "method": "decision_method_v0.2.md"
+}

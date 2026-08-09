@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Video Prompt Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "prompt_id": { "type": "string", "minLength": 1 },
+    "shot_id": { "type": "string", "minLength": 1 },
+    "engine_version": { "type": "string" },
+    "model_adapter_version": { "type": "string" },
+    "mode": { "type": "string", "enum": ["self", "control", "dual"] },
+    "input_data": { "type": "object" },
+    "prompt_text": { "type": "string", "minLength": 1 },
+    "negative_constraints": { "type": "array", "items": { "type": "string" } },
+    "review": { "type": "object" },
+    "version": { "type": "string" }
+  },
+  "required": ["prompt_id", "shot_id", "engine_version", "mode", "prompt_text", "version"]
+}

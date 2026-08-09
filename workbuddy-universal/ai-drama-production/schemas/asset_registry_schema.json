@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rune Asset Registry Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "asset_id": { "type": "string", "minLength": 1 },
+    "asset_name": { "type": "string", "minLength": 1 },
+    "canonical_key": { "type": "string", "minLength": 1 },
+    "asset_type": { "type": "string", "enum": ["character", "scene", "prop", "creature", "costume", "interface", "vfx", "director", "camera", "lighting", "action", "voice", "performance"] },
+    "importance": { "type": "string", "enum": ["A", "B", "C"] },
+    "status": { "type": "string", "enum": ["draft", "approved", "deprecated"] },
+    "version": { "type": "string", "minLength": 1 },
+    "used_in": { "type": "array", "items": { "type": "string" } },
+    "supersedes": { "type": ["string", "null"] }
+  },
+  "required": ["asset_id", "asset_name", "canonical_key", "asset_type", "importance", "status", "version"]
+}

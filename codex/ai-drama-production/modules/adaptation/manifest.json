@@ -1,0 +1,16 @@
+{
+  "module_name": "adaptation",
+  "version": "V0.2",
+  "description": "小说或故事到可生产剧集结构的改编模块，包含竖屏短剧节奏方法",
+  "status": "testing",
+  "previous_versions": ["V0.1"],
+  "routes": {
+    "vertical_short_drama": {
+      "entrypoint": "short_drama_pacing_v0.2.md",
+      "status": "testing"
+    }
+  },
+  "input": ["novel_text", "project_config"],
+  "output": ["world_database", "character_database", "relationship_database", "timeline_database", "season_plan", "episode_plan", "scene_plan"],
+  "dependencies": ["project_schema", "character_schema", "scene_schema"]
+}

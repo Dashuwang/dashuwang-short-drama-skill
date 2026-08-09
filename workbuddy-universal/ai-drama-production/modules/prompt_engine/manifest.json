@@ -1,0 +1,36 @@
+{
+  "module_name": "prompt_engine",
+  "version": "V0.2",
+  "description": "从已批准的镜头数据库和已确认资产生成可版本追踪的视频模型提示词",
+  "status": "testing",
+  "previous_versions": ["V0.1"],
+  "input": ["shot_database", "asset_registry", "project_config"],
+  "output": ["self_prompt", "control_prompt", "prompt_record"],
+  "dependencies": ["shot_schema", "prompt_schema"],
+  "routes": {
+    "self": {
+      "status": "testing",
+      "engine_version": "self_prompt_engine_V0.1",
+      "entrypoint": "self_prompt_v0.1/method.md",
+      "integration": "self_prompt_v0.1/integration.md",
+      "dialogue_demo": "self_prompt_v0.1/dialogue_demo.md",
+      "output_sections": ["镜头编号", "资产", "全局设定", "提示词"]
+    },
+    "control": {
+      "status": "reserved",
+      "engine_version": null,
+      "entrypoint": null
+    },
+    "td": {
+      "status": "reserved",
+      "engine_version": null,
+      "entrypoint": null
+    },
+    "dual": {
+      "status": "reserved",
+      "engine_version": null,
+      "entrypoint": null
+    }
+  }
+}
+

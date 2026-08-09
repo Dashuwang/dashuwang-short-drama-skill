@@ -1,0 +1,10 @@
+{
+  "module_name": "rune_generation",
+  "version": "V0.2",
+  "description": "按冻结版格式生成人设、场景、道具、服装、界面及可视化技能符提示词",
+  "status": "active",
+  "input": ["asset_requirements", "character_database", "scene_database", "prop_database", "approved_story_facts"],
+  "output": ["rune_requirements", "copy_ready_rune_prompts", "rune_registry"],
+  "dependencies": ["asset_registry_schema", "rune_prompt_spec"]
+}
+

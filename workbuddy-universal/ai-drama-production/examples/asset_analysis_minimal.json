@@ -1,0 +1,23 @@
+{
+  "analysis_id": "ANALYSIS_DEMO_001",
+  "project_id": "PROJECT_DEMO",
+  "module_version": "V0.2",
+  "required_runes": [
+    {
+      "candidate_id": "CANDIDATE_001",
+      "canonical_key": "character.protagonist",
+      "name": "主角",
+      "asset_type": "character",
+      "importance": "A",
+      "decision": "create",
+      "source_ref": "EP001.SC001",
+      "reason": "核心人物需要跨镜保持身份与外观一致。",
+      "existing_asset_id": null,
+      "human_status": "pending"
+    }
+  ],
+  "production_gate": {
+    "status": "needs_approval",
+    "items": ["CANDIDATE_001"]
+  }
+}

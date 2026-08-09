@@ -1,0 +1,16 @@
+{
+  "module_name": "shot_design",
+  "version": "V0.2",
+  "description": "场次到约15秒可生成视频片段的数据化设计，包含竖屏短剧信息密度与动作对白锚点",
+  "status": "testing",
+  "previous_versions": ["V0.1"],
+  "routes": {
+    "vertical_short_drama": {
+      "entrypoint": "vertical_short_drama_shot_v0.2.md",
+      "status": "testing"
+    }
+  },
+  "input": ["scene_plan", "character_database", "asset_registry", "continuity_state"],
+  "output": ["shot_database", "continuity_updates"],
+  "dependencies": ["shot_schema", "asset_registry_schema"]
+}

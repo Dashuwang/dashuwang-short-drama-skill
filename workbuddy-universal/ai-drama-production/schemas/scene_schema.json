@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Scene Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scene_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "type": { "type": "string", "enum": ["indoor", "outdoor", "mixed"] },
+    "location_category": { "type": "string" },
+    "story_function": { "type": "string" },
+    "assets": {
+      "type": "object",
+      "properties": {
+        "scene_rune": { "type": "string" },
+        "reference_images": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "time": { "type": "string" },
+        "weather": { "type": "string" },
+        "season": { "type": "string" },
+        "temperature": { "type": "string" }
+      }
+    },
+    "states": { "type": "array", "items": { "type": "string" } },
+    "special_rules": { "type": "array", "items": { "type": "string" } },
+    "version": { "type": "string" }
+  },
+  "required": ["scene_id", "name", "type", "version"]
+}

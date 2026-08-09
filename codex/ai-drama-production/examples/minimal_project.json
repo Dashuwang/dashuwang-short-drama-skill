@@ -1,0 +1,24 @@
+{
+  "project_id": "DEMO_001",
+  "project_name": "最小示例项目",
+  "season": 1,
+  "genre": "都市悬疑",
+  "production_mode": "short_drama",
+  "prompt_mode": "dual",
+  "video_model": { "name": "unselected", "version": "" },
+  "modules": {
+    "adaptation": "V0.1",
+    "asset_analysis": "V0.1",
+    "rune_generation": "V0.1",
+    "shot_design": "V0.1",
+    "prompt_engine": "V0.1",
+    "model_adapter": "V0.1"
+  },
+  "global_style": {
+    "visual_style": "现实主义",
+    "cinematic_style": "克制",
+    "color_style": "冷暖对比",
+    "quality_standard": "continuity_first"
+  },
+  "status": { "current_phase": "initialization", "version": "V0.1" }
+}

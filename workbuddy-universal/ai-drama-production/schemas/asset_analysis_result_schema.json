@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Required Runes Result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "analysis_id": { "type": "string", "minLength": 1 },
+    "project_id": { "type": "string", "minLength": 1 },
+    "module_version": { "const": "V0.2" },
+    "required_runes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "candidate_id": { "type": "string", "minLength": 1 },
+          "canonical_key": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "asset_type": { "type": "string", "enum": ["character", "scene", "prop", "creature", "costume", "interface", "vfx", "director", "camera", "lighting", "action", "performance", "voice"] },
+          "importance": { "type": "string", "enum": ["A", "B", "C"] },
+          "decision": { "type": "string", "enum": ["create", "reuse", "new_version", "describe_inline"] },
+          "source_ref": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "existing_asset_id": { "type": ["string", "null"] },
+          "human_status": { "type": "string", "enum": ["pending", "approved", "rejected"] }
+        },
+        "required": ["candidate_id", "canonical_key", "name", "asset_type", "importance", "decision", "source_ref", "reason", "human_status"]
+      }
+    },
+    "production_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["ready", "needs_approval", "blocked"] },
+        "items": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["status", "items"]
+    }
+  },
+  "required": ["analysis_id", "project_id", "module_version", "required_runes", "production_gate"]
+}

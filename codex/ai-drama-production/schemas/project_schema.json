@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Drama Project",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "project_id": { "type": "string", "minLength": 1 },
+    "project_name": { "type": "string", "minLength": 1 },
+    "season": { "type": "integer", "minimum": 1, "default": 1 },
+    "genre": { "type": "string" },
+    "production_mode": { "type": "string", "enum": ["short_drama", "cinematic_drama", "custom"] },
+    "prompt_mode": { "type": "string", "enum": ["self", "control", "dual"] },
+    "video_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "required": ["name"]
+    },
+    "modules": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "properties": {
+        "adaptation": { "type": "string" },
+        "asset_analysis": { "type": "string" },
+        "rune_generation": { "type": "string" },
+        "shot_design": { "type": "string" },
+        "prompt_engine": { "type": "string" },
+        "model_adapter": { "type": "string" }
+      }
+    },
+    "global_style": {
+      "type": "object",
+      "properties": {
+        "visual_style": { "type": "string" },
+        "cinematic_style": { "type": "string" },
+        "color_style": { "type": "string" },
+        "quality_standard": { "type": "string" }
+      }
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "current_phase": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    }
+  },
+  "required": ["project_id", "project_name", "production_mode", "modules"]
+}

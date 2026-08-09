@@ -1,0 +1,18 @@
+{
+  "shot_id": "S01E01_SHOT001",
+  "episode_id": "S01E01",
+  "scene_id": "SCENE001",
+  "duration": 15,
+  "story_goal": "",
+  "emotion_goal": "",
+  "characters": [],
+  "character_states": {},
+  "assets": [],
+  "action": {},
+  "dialogue": [],
+  "camera": {},
+  "lighting": {},
+  "continuity": {},
+  "status": "draft",
+  "version": "V1"
+}

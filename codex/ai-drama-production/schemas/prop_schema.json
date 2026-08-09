@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Prop Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "prop_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "type": { "type": "string" },
+    "importance": { "type": "string", "enum": ["A", "B", "C"] },
+    "asset": { "type": "object", "properties": { "prop_rune": { "type": "string" } } },
+    "appearance_rules": {
+      "type": "object",
+      "properties": {
+        "material": { "type": "string" },
+        "special_features": { "type": "string" }
+      }
+    },
+    "states": { "type": "array", "items": { "type": "string" } },
+    "usage_rules": { "type": "array", "items": { "type": "string" } },
+    "version": { "type": "string" }
+  },
+  "required": ["prop_id", "name", "importance", "version"]
+}
