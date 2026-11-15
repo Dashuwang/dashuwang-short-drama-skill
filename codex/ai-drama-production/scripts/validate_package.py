@@ -23,8 +23,19 @@ def main() -> int:
         "VERSION",
         "PROJECT_KNOWLEDGE_BASE.md",
         "core/workflow.md",
+        "core/execution_rules.md",
+        "core/quality_check.md",
         "references/core-scope-and-acceptance-v0.3.md",
+        "references/project-intake-and-routing-v0.4.md",
+        "references/end-to-end-production-flow-v0.4.md",
+        "references/proven-production-rules-v0.4.md",
+        "references/work-status-copy-v0.1.md",
         "modules/asset_analysis/decision_method_v0.2.md",
+        "modules/rune_generation/production_asset_standard_v0.4.md",
+        "modules/model_adapter/vidu_nopeak_v0.1.md",
+        "templates/project_intake.template.json",
+        "templates/current.template.json",
+        "config/work_status_copy_v0.1.json",
         "schemas/asset_analysis_result_schema.json",
         "examples/asset_analysis_minimal.json",
     ]
@@ -44,9 +55,13 @@ def main() -> int:
                 errors.append("SKILL.md name must be ai-drama-production")
             if not re.search(r"^description:\s*\S+", frontmatter, re.MULTILINE):
                 errors.append("SKILL.md description is missing")
-        for phrase in ("小说改编成脚本", "脚本生成符资产提示词", "脚本与符生成视频"):
+        for phrase in ("小说改编成脚本", "脚本生成符资产提示词", "脚本与符生成视频", "vidu_nopeak", "大叔汪开始做新剧"):
             if phrase not in content:
                 errors.append(f"SKILL.md missing core stage: {phrase}")
+
+    version_path = root / "VERSION"
+    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.4-testing":
+        errors.append("VERSION must be V0.4-testing")
 
     interface_path = root / "agents/openai.yaml"
     if interface_path.is_file():
@@ -89,6 +104,49 @@ def main() -> int:
         if "dependencies" in registry or "approval" in registry:
             errors.append("asset registry template contains removed complexity")
 
+    intake_path = root / "templates/project_intake.template.json"
+    if intake_path.is_file():
+        intake = load_json(intake_path)
+        required_intake = {
+            "source",
+            "adaptation_policy",
+            "visual_style",
+            "genre",
+            "audience_lane",
+            "ratio",
+            "episode_duration_seconds",
+            "episode_count_or_total_duration",
+            "production_route",
+            "seedance_platform",
+        }
+        if not required_intake.issubset(intake):
+            errors.append("project intake template is incomplete")
+
+    adapter_manifest_path = root / "modules/model_adapter/manifest.json"
+    if adapter_manifest_path.is_file():
+        adapter = load_json(adapter_manifest_path)
+        route = adapter.get("routes", {}).get("vidu_nopeak", {})
+        if adapter.get("status") != "testing" or route.get("entrypoint") != "vidu_nopeak_v0.1.md":
+            errors.append("model_adapter Vidu nopeak route is missing or inactive")
+
+    asset_standard_path = root / "modules/rune_generation/production_asset_standard_v0.4.md"
+    if asset_standard_path.is_file():
+        standard = asset_standard_path.read_text(encoding="utf-8")
+        for phrase in ("完整、独立、可复制", "不得使用“同上”", "人物状态与年龄变体"):
+            if phrase not in standard:
+                errors.append(f"asset standard missing frozen requirement: {phrase}")
+
+    status_copy_path = root / "config/work_status_copy_v0.1.json"
+    if status_copy_path.is_file():
+        status_copy = load_json(status_copy_path)
+        weights = status_copy.get("weights", {})
+        if sum(weights.values()) != 100:
+            errors.append("work status copy weights must total 100")
+        if weights.get("food_drink") != 10:
+            errors.append("food and drink status copy must remain a minority")
+        if not status_copy.get("max_one_line_per_meaningful_stage"):
+            errors.append("work status copy must be rate limited")
+
     obsolete = [
         "references/system-capability-matrix-v0.3.md",
         "references/acceptance-test-matrix-v0.3.md",
@@ -106,7 +164,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         return 1
 
-    print("Lean package validation passed: three core stages, minimal asset decisions, JSON, and routes are consistent.")
+    print("V0.4 package validation passed: three core stages, intake, complete asset prompts, Vidu nopeak route, JSON, and current-version rules are consistent.")
     return 0
 
 

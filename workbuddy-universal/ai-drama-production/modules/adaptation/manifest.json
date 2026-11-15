@@ -10,6 +10,10 @@
       "status": "testing"
     }
   },
+  "production_supplements": [
+    "../../references/project-intake-and-routing-v0.4.md",
+    "../../references/proven-production-rules-v0.4.md"
+  ],
   "input": ["novel_text", "project_config"],
   "output": ["world_database", "character_database", "relationship_database", "timeline_database", "season_plan", "episode_plan", "scene_plan"],
   "dependencies": ["project_schema", "character_schema", "scene_schema"]

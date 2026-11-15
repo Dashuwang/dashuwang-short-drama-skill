@@ -1,9 +1,25 @@
 {
   "module_name": "model_adapter",
-  "version": "V0.1",
-  "description": "把通用视频提示词转换为目标模型兼容表达的适配接口",
-  "status": "interface_only",
+  "version": "V0.2",
+  "description": "把源视频提示词转换为目标平台的派生执行载荷，并安全执行 Vidu Q4 闲时创作",
+  "status": "testing",
+  "previous_versions": ["V0.1"],
   "input": ["prompt_record", "video_model", "model_constraints"],
-  "output": ["adapted_prompt", "parameter_plan", "compatibility_notes"],
-  "dependencies": ["prompt_schema"]
+  "output": ["adapted_prompt", "parameter_plan", "ordered_assets", "task_record", "compatibility_notes"],
+  "dependencies": ["prompt_schema", "asset_registry_schema"],
+  "routes": {
+    "vidu_nopeak": {
+      "status": "testing",
+      "adapter_version": "vidu_nopeak_V0.1",
+      "entrypoint": "vidu_nopeak_v0.1.md"
+    },
+    "seedance": {
+      "status": "reserved",
+      "entrypoint": null
+    },
+    "prompt_only": {
+      "status": "active",
+      "entrypoint": null
+    }
+  }
 }

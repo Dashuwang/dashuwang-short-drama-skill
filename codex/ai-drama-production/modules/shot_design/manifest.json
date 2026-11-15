@@ -10,6 +10,7 @@
       "status": "testing"
     }
   },
+  "production_supplements": ["../../references/proven-production-rules-v0.4.md"],
   "input": ["scene_plan", "character_database", "asset_registry", "continuity_state"],
   "output": ["shot_database", "continuity_updates"],
   "dependencies": ["shot_schema", "asset_registry_schema"]

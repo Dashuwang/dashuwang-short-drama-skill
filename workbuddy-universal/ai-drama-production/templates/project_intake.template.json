@@ -1,0 +1,18 @@
+{
+  "source": {
+    "file": "",
+    "scope": "",
+    "rights_boundary": "user_confirmed_or_unknown"
+  },
+  "adaptation_policy": "full_preservation|compression|free_adaptation|original",
+  "visual_style": "",
+  "genre": "",
+  "audience_lane": "male|female|general",
+  "ratio": "16:9|9:16",
+  "episode_duration_seconds": null,
+  "episode_count_or_total_duration": "",
+  "production_route": "vidu_nopeak|seedance|prompt_only",
+  "seedance_platform": "dreamina|higgsfield|other|not_applicable",
+  "review_mode": "steady|fast|step_by_step",
+  "confirmed_at": ""
+}
