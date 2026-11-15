@@ -1,6 +1,6 @@
 # 大叔汪短剧技能包
 
-版本：V0.4-testing
+版本：`V0.5-testing` · [更新日志与升级须知](CHANGELOG.md)
 
 系统只保留三个核心阶段：
 
@@ -8,7 +8,7 @@
 2. 从剧本生成必要的完整符资产提示词并锁定资产。
 3. 使用剧本与已确认符资产生成视频提示词，并按选择接入 Vidu Q4 闲时创作或 Seedance 平台路线。
 
-V0.4 新增开工七问、改编试写门、完整资产格式与看图验收、12—16 秒高密度生成组、动作—对白锚点、Vidu Q4 闲时安全执行、任务去重、无水印下载、分层质检和真实完成等级。Vidu 闲时只有实时资格有效且精确 0 积分时才能提交，不提供收费兜底。
+V0.5 新增点选开工卡（只有一个「特别要求」输入框）、全剧总则与正式分组剧本、包含可视化声线区的新版制符规范。保留 Vidu Q4 闲时安全执行，只有实时资格有效且精确 0 积分才能提交，不提供收费兜底。
 
 工作期间会按真实阶段显示“大叔汪干活碎碎念”：以上班族、冷笑话、片场和电脑等待为主，少量穿插生活与吃喝吐槽；不展示隐藏推理，也不使用玩笑虚报进度。
 
@@ -32,7 +32,9 @@ V0.4 新增开工七问、改编试写门、完整资产格式与看图验收、
 大叔汪开始做新剧
 ```
 
-也可以把第一行换成小说文件的完整路径，或当前项目中唯一的文件名（如 `我的小说.txt`）。只有一份可读原著就直接开始读，多份才请你选；只询问还没定的开工项。这句启动语不自动授权远程生成或积分消费。
+也可以把第一行换成小说文件的完整路径，或当前项目中唯一的文件名（如 `我的小说.txt`）。标准项只点选，已明确的项不必重填；选择 Seedance 后才显示平台。宿主没有符合要求的原生卡时，打开技能内 `assets/project-intake.html`，选完用「复制开工卡」一次贴回对话，或上传导出的 JSON。模板内只有一个自由输入框「特别要求」。开工卡不自动回传，不授权远程生成或积分消费。
+
+制作与交付标准：[正式剧本格式](codex/ai-drama-production/modules/adaptation/screenplay_format_v0.5.md) · [新版制符格式](codex/ai-drama-production/modules/rune_generation/asset_prompt_format_v0.5.md) · [开工卡与路由](codex/ai-drama-production/references/project-intake-and-routing-v0.5.md)。
 
 ### WorkBuddy / Agent Skills 通用版
 
@@ -50,8 +52,10 @@ WorkBuddy 项目级安装：复制到项目目录：
 
 ## ZIP 包
 
-- `dist/大叔汪短剧技能包-Codex-V0.4-testing.zip`
-- `dist/大叔汪短剧技能包-WorkBuddy通用版-V0.4-testing.zip`
+- [Codex V0.5-testing](dist/大叔汪短剧技能包-Codex-V0.5-testing.zip)
+- [WorkBuddy 通用版 V0.5-testing](dist/大叔汪短剧技能包-WorkBuddy通用版-V0.5-testing.zip)
+
+升级已有安装时，先备份旧版，再用对应发行包更新同名 `ai-drama-production` 目录；不要另装一个同名副本。已确认的旧剧本、符图和提示词不会自动迁移或重生。
 
 ## 项目原则
 

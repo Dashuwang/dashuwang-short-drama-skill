@@ -1,11 +1,13 @@
 {
   "module_name": "rune_generation",
-  "version": "V0.2",
-  "description": "按冻结版格式生成人设、场景、道具、服装、界面及可视化技能符提示词",
+  "version": "V0.5",
+  "description": "按实剧格式生成独立可复制的资产符及独立技能符提示词",
   "status": "active",
-  "production_supplements": ["production_asset_standard_v0.4.md"],
+  "format_entrypoint": "asset_prompt_format_v0.5.md",
+  "skill_rune_entrypoint": "skill_rune_template.md",
+  "legacy_format": "rune_prompt_spec.md",
   "input": ["asset_requirements", "character_database", "scene_database", "prop_database", "approved_story_facts"],
   "output": ["rune_requirements", "copy_ready_rune_prompts", "rune_registry"],
-  "dependencies": ["asset_registry_schema", "rune_prompt_spec"]
+  "dependencies": ["asset_registry_schema"]
 }
 

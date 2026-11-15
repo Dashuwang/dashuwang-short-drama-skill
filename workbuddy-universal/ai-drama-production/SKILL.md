@@ -11,7 +11,7 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 把原小说的**文件路径、所在文件夹路径，或当前项目里的文件名**和「**大叔汪开始做新剧**」发在同一条消息里，不用另传一遍文件或补写技能名。也可以只发启动语，再补原著。
 
-先按[开工卡的原著定位规则](references/project-intake-and-routing-v0.4.md#快捷启动与原著定位)查找原著。唯一可读时直接读原著并开始理解，只集中询问缺失的开工项；信息齐全即可进入试写，不再另问一次是否开工。仍保留剧本、资产和首条提示词的确认点；启动语不自动授权远程生成、积分消费或覆盖已有项目。
+先按[开工卡的原著定位规则](references/project-intake-and-routing-v0.5.md#原著定位)查找原著。唯一可读时直接读原著并开始理解，缺失的开工项用点选卡确认；信息齐全即可进入试写，不再另问一次是否开工。仍保留剧本、资产和首条提示词的确认点；启动语不自动授权远程生成、积分消费或覆盖已有项目。
 
 ## 工作状态文案
 
@@ -19,7 +19,7 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 ## 开工路由
 
-新项目先用一张开工卡确认以下内容；用户已明确的项直接继承，不重复询问。缺少关键项时一次给出简短选项，避免反复追问。
+新项目使用[新剧开工卡](assets/project-intake.html)：标准项只点选，只有一个「特别要求」自由输入框；已明确的值直接继承。宿主不能提供符合要求的原生卡片时，交付本地 HTML 供浏览器点选并复制／导出回传，不发逐题文字问卷。
 
 1. 原著文件、制作范围与版权/授权边界。
 2. 改编策略：原著完整保留、适度压缩、自由改编或原创。
@@ -34,13 +34,13 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 可选再确认协作节奏：快速、稳妥或逐步。默认“稳妥”，在试写剧本、关键资产、首条视频提示词三个位置停下。
 
-详细问题、默认值与路由条件见 `references/project-intake-and-routing-v0.4.md`。
+详细交互、默认值与路由条件见 `references/project-intake-and-routing-v0.5.md`。
 
 ## 开始前
 
 1. 读取 `PROJECT_KNOWLEDGE_BASE.md`、`core/workflow.md` 和当前项目的 `CURRENT.json` 或等价当前入口；没有当前入口时创建最小入口。
 2. 只读取当前阶段需要的模块，不预加载无关资料。
-3. 涉及制符时，读取 `modules/rune_generation/` 的总规范、对应模板和 `production_asset_standard_v0.4.md`；不得凭记忆简化格式。
+3. 涉及制符时，先读 `modules/rune_generation/README.md` 与 `asset_prompt_format_v0.5.md`；不得沿用旧人设或纯衣物模板覆盖新版。技能符仍读独立模板。
 4. 涉及视频提示词时，读取 `modules/shot_design/`、所选 `modules/prompt_engine/` 与目标 `modules/model_adapter/`。
 5. 涉及真实生成时，先读取目标工具当前能力与额度；历史参数只作案例，不能代替实时能力探测。
 
@@ -50,7 +50,7 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 调用 `modules/adaptation/`。先冻结范围、改编自由度、揭示顺序、对白政策和时长预算；再用少量集数试写，用户确认密度后才扩批。
 
-输出必须包含分集目标、场次、人物动作、原样对白、情绪、冲突、可见拍点、集尾钩子和新增资产候选。短剧按有效剧情拍点分配时长；12—16 秒生成组通常包含 3—5 个因果连续微拍点，不能用慢动作、凝视和空镜填满容器。
+按 `modules/adaptation/screenplay_format_v0.5.md` 交付正式稿：先写适用于全剧的制作总则，再写本集独有信息、逐组正文、声音负载和资产预登记。短剧按有效剧情拍点分配时长；12—16 秒生成组通常包含 3—5 个因果连续微拍点，不能用慢动作、凝视和空镜填满容器。
 
 ### 2. 脚本生成符资产提示词
 
@@ -93,13 +93,13 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 ## 读取路由
 
-- 开工问答与模型路线：`references/project-intake-and-routing-v0.4.md`
+- 开工点选与模型路线：`references/project-intake-and-routing-v0.5.md`
 - 完整流程与验收：`references/end-to-end-production-flow-v0.4.md`
 - 实剧沉淀规则与例子：`references/proven-production-rules-v0.4.md`
 - 三阶段边界：`references/core-scope-and-acceptance-v0.3.md`
-- 改编与短剧节奏：`modules/adaptation/README.md`、`modules/adaptation/short_drama_pacing_v0.2.md`
+- 正式剧本：`modules/adaptation/screenplay_format_v0.5.md`；改编与节奏见该模块 README。
 - 必要资产判断：`modules/asset_analysis/decision_method_v0.2.md`
-- 制符：`modules/rune_generation/README.md`、`rune_prompt_spec.md`、对应模板与 `production_asset_standard_v0.4.md`
+- 制符：`modules/rune_generation/README.md`、`modules/rune_generation/asset_prompt_format_v0.5.md`
 - 分镜组：`modules/shot_design/vertical_short_drama_shot_v0.2.md`
 - 视频提示词：`modules/prompt_engine/README.md` 及所选模式
 - Vidu 闲时执行：`modules/model_adapter/vidu_nopeak_v0.1.md`

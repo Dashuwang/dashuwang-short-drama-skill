@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大叔汪 · 新剧开工卡</title>
+<style>
+  :root{color-scheme:light;--ink:#202724;--muted:#585f59;--paper:#f6f4ee;--white:#fffefb;--line:#dcded1;--accent:#1b6545}
+  *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,sans-serif}main{max-width:780px;margin:auto;padding:36px 18px 55px}header{border-top:4px solid var(--accent);padding:20px 0}.eyebrow{letter-spacing:.18em;color:var(--accent);font-weight:700}h1{font-size:clamp(27px,6vw,43px);margin:5px 0}p{color:var(--muted);margin:7px 0}fieldset{border:1px solid var(--line);border-radius:10px;margin:0 0 14px;background:var(--white);padding:11px 13px 14px;min-width:0}legend{padding:0 6px;font-weight:700}fieldset small{color:var(--muted)}.choices{display:flex;gap:8px;flex-wrap:wrap}label.option{cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:7px 10px;min-height:40px}label.option:has(:checked){border-color:var(--accent);background:#eaf4ea;color:#144b34}input[type=radio]{accent-color:var(--accent);margin:0}textarea{display:block;width:100%;min-height:88px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px;font:inherit;border-radius:6px;resize:vertical}button{padding:10px 16px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:white;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:transparent;color:var(--accent)}.actions{display:flex;flex-wrap:wrap;gap:8px}.result{min-height:24px;color:var(--accent);margin:9px 0}.error{color:#8c281e}a{color:var(--accent)}:focus-visible{outline:2px solid #ad5b20;outline-offset:3px}[hidden]{display:none!important}
+</style>
+<main>
+  <header><div class="eyebrow">大叔汪片场 / 01</div><h1>新剧开工卡</h1><p>正常项点选。非标准尺寸、指定章节、风格参考等，只写在「特别要求」。</p><p>本页不联网、不读原著，也不提交生成。</p></header>
+  <form id="intake">
+    <div id="choices"></div>
+    <fieldset><legend><label for="special">特别要求 <small>· 可留空</small></label></legend><textarea id="special" name="special_requirements" placeholder="例如：只做第 2–8 章、不加背景音乐、使用指定的风格参考。"></textarea></fieldset>
+    <div class="actions"><button type="submit" value="copy">复制开工卡</button><button class="secondary" type="submit" value="download">下载开工卡 JSON</button></div>
+    <div class="result" id="status" role="status" aria-live="polite"></div>
+    <p>复制后把结果一次贴回原对话，或上传下载的 JSON。无需逐题打字；开工卡不代表授权生成或付费。</p>
+  </form>
+  <noscript>请启用 JavaScript，才能点选和导出开工卡。</noscript>
+</main>
+<script>
+"use strict";
+const form = document.querySelector('#intake');
+const container = document.querySelector('#choices');
+const status = document.querySelector('#status');
+const textField = document.querySelector('#special');
+const params = new URLSearchParams(location.hash.slice(1));
+function parse(key, fallback) { try { return JSON.parse(params.get(key)) ?? fallback; } catch { return fallback; } }
+const rawPrefill = parse('prefill', {});
+const prefill = rawPrefill && typeof rawPrefill === 'object' && !Array.isArray(rawPrefill) ? rawPrefill : {};
+const rawCandidates = parse('candidates', []);
+const candidates = Array.isArray(rawCandidates) ? rawCandidates.filter(item => item && typeof item.id === 'string' && item.id !== '' && typeof item.label === 'string').map(item => [item.id,item.label]) : [];
+const custom = ['special','按特别要求'];
+const schema = [
+  ...(candidates.length ? [['source_choice','选择原著',candidates]] : []),
+  ['source_scope','制作范围',[['pilot','先试做前几集'],['full','全书'],['season','先做第一季'],['selected','指定章节（写在特别要求）'],['original_story','原创故事']]],
+  ['rights_boundary','原著授权',[['confirmed','自有或已获改编授权'],['unknown','授权待确认'],['original','原创']]],
+  ['adaptation_policy','改编策略',[['full_preservation','原著完整保留'],['compression','适度压缩'],['free_adaptation','自由改编'],['original','原创']]],
+  ['visual_style','画风',[['live_action','真人写实'],['semi_realistic_3d','轻写实 3D'],['chinese_3d','国漫 3D'],['anime_2d','二维动漫'],custom]],
+  ['genre','题材',[['period','古装／宫廷'],['urban','都市／情感'],['suspense','悬疑／推理'],['fantasy','奇幻／玄幻'],['action','动作／热血'],['comedy','喜剧'],custom]],
+  ['audience_lane','受众',[['male','男频'],['female','女频'],['general','通用']]],
+  ['ratio','成片画幅',[['9:16','竖屏 9:16'],['16:9','横屏 16:9']]],
+  ['episode_duration_seconds','单集时长',[['60','60 秒'],['90','90 秒'],['120','120 秒'],['180','180 秒'],custom]],
+  ['episode_count_or_total_duration','体量',[['pilot','先做试写集'],['30','30 集'],['60','60 集'],['80','80 集'],['120','120 集'],['recommend','按原著先给体量建议'],custom]],
+  ['production_route','制作路线',[['vidu_nopeak','Vidu Q4 闲时'],['seedance','Seedance'],['prompt_only','只交提示词']]],
+  ['seedance_platform','Seedance 平台',[['dreamina','即梦'],['higgsfield','Higgsfield'],['other','其他平台（写在特别要求）']]],
+];
+const rows = new Map();
+for (const [key, title, options] of schema) {
+  const box = document.createElement('fieldset');
+  const legend = document.createElement('legend'); legend.textContent = title; box.append(legend);
+  const selected = prefill[key];
+  const known = (typeof selected === 'string' || typeof selected === 'number') && selected !== '' && selected !== 'special';
+  if (known) {
+    const summary = document.createElement('small'); summary.textContent = '已确认 · ' + (options.find(([id]) => id === String(selected))?.[1] ?? String(selected)); box.append(summary);
+  } else {
+    const choices = document.createElement('div'); choices.className = 'choices'; box.append(choices);
+    for (const [id, label] of options) {
+      const tag = document.createElement('label'); tag.className = 'option';
+      const radio = document.createElement('input'); radio.type = 'radio'; radio.name = key; radio.value = id;
+      radio.required = true; radio.checked = String(selected ?? '') === id;
+      tag.append(radio,document.createTextNode(label)); choices.append(tag);
+    }
+  }
+  rows.set(key, { box, confirmed: known, selected });
+  container.append(box);
+}
+function read(key) {
+  const row = rows.get(key);
+  return row?.confirmed ? String(row.selected) : new FormData(form).get(key);
+}
+function refresh() {
+  const platform = rows.get('seedance_platform').box;
+  platform.hidden = read('production_route') !== 'seedance';
+  for (const input of platform.querySelectorAll('input')) input.disabled = platform.hidden;
+  const specialNeeded = schema.some(([key]) => read(key) === 'special') || read('source_scope') === 'selected' ||
+    (read('production_route') === 'seedance' && read('seedance_platform') === 'other');
+  textField.required = specialNeeded;
+}
+function payload() {
+  const answers = {};
+  for (const [key] of schema) {
+    if (key === 'seedance_platform' && read('production_route') !== 'seedance') continue;
+    const value = read(key);
+    if (value !== null && value !== undefined) answers[key] = key === 'episode_duration_seconds' && /^\d+$/.test(value) ? Number(value) : value;
+  }
+  return {format:'dashuwang_drama_intake_v0.5', answers, special_requirements:textField.value.trim()};
+}
+function download(text) {
+  const url = URL.createObjectURL(new Blob([text], {type:'application/json;charset=utf-8'}));
+  const link = document.createElement('a'); link.href = url; link.download='大叔汪_新剧开工卡.json'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+form.addEventListener('change', refresh);
+form.addEventListener('submit', async event => {
+  event.preventDefault(); refresh();
+  if (!form.reportValidity()) return;
+  if (textField.required && !textField.value.trim()) { status.textContent='请在特别要求里补上刚才选的自定义项。'; textField.focus(); return; }
+  const text = JSON.stringify(payload(),null,2);
+  if (event.submitter?.value === 'download') { download(text); status.textContent='已导出，请把开工卡发回原对话。'; return; }
+  try { await navigator.clipboard.writeText(text); status.textContent='开工卡已复制，贴回原对话就行。'; }
+  catch { download(text); status.textContent='浏览器不允许复制，已改用 JSON 下载，请发回原对话。'; }
+});
+refresh();
+</script>
+</html>

@@ -11,7 +11,8 @@
     }
   },
   "production_supplements": [
-    "../../references/project-intake-and-routing-v0.4.md",
+    "screenplay_format_v0.5.md",
+    "../../references/project-intake-and-routing-v0.5.md",
     "../../references/proven-production-rules-v0.4.md"
   ],
   "input": ["novel_text", "project_config"],

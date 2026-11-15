@@ -14,5 +14,6 @@
   "production_route": "vidu_nopeak|seedance|prompt_only",
   "seedance_platform": "dreamina|higgsfield|other|not_applicable",
   "review_mode": "steady|fast|step_by_step",
+  "special_requirements": "",
   "confirmed_at": ""
 }

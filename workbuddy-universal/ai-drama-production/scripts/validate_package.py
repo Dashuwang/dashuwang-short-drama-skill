@@ -27,6 +27,10 @@ def main() -> int:
         "core/quality_check.md",
         "references/core-scope-and-acceptance-v0.3.md",
         "references/project-intake-and-routing-v0.4.md",
+        "references/project-intake-and-routing-v0.5.md",
+        "assets/project-intake.html",
+        "modules/adaptation/screenplay_format_v0.5.md",
+        "modules/rune_generation/asset_prompt_format_v0.5.md",
         "references/end-to-end-production-flow-v0.4.md",
         "references/proven-production-rules-v0.4.md",
         "references/work-status-copy-v0.1.md",
@@ -60,8 +64,8 @@ def main() -> int:
                 errors.append(f"SKILL.md missing core stage: {phrase}")
 
     version_path = root / "VERSION"
-    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.4-testing":
-        errors.append("VERSION must be V0.4-testing")
+    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5-testing":
+        errors.append("VERSION must be V0.5-testing")
 
     interface_path = root / "agents/openai.yaml"
     if interface_path.is_file():
@@ -118,6 +122,7 @@ def main() -> int:
             "episode_count_or_total_duration",
             "production_route",
             "seedance_platform",
+            "special_requirements",
         }
         if not required_intake.issubset(intake):
             errors.append("project intake template is incomplete")
@@ -164,7 +169,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         return 1
 
-    print("V0.4 package validation passed: three core stages, intake, complete asset prompts, Vidu nopeak route, JSON, and current-version rules are consistent.")
+    print("V0.5 package validation passed: screenplay, assets, clickable intake, JSON and Vidu nopeak route.")
     return 0
 
 
