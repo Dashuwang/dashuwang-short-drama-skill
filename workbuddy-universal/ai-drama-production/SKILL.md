@@ -56,6 +56,8 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 
 从已确认脚本中识别必须稳定复现的人物、必要换装、场景、道具、生物、界面、角色状态与技能方法。先复用已有符，只为必要对象创建或升版。
 
+**先交全剧人物差异表，再写人设提示词。** 剧本和必要人物盘点确认后，为所有需独立人设的角色按稳定 ID 一人一行，交付可用 Excel 打开的「人物脸型与身材差异表」CSV。先忽略发型、服装、配饰和妆容，横向核对近龄、同身份及常同框角色的骨相、五官与体态，再逐人转写到完整人设提示词。续作或新增角色先读旧表，在同一主表补行，沿用已定人设。按[差异表规则](modules/rune_generation/character_differentiation_v0.1.md)区分文字对照与实际成图复核，未生图不得记视觉通过。
+
 所有入选资产必须使用完整独立模板，不因“次要”而用“同上”或缩写。次要角色的一套默认衣装通常保留在人设符内；只有主要人物的长期换装、标志性衣装或连续性高风险衣装才单独制作服装符。状态变体必须由已确认人物图派生，不得纯文字另造一张脸。
 
 生成成功、视觉通过和用户锁定必须分别记录；只有关键资产锁定后才能批量进入视频阶段。
@@ -99,7 +101,7 @@ description: 响应「大叔汪开始做新剧」，可同条消息提供小说�
 - 三阶段边界：`references/core-scope-and-acceptance-v0.3.md`
 - 正式剧本：`modules/adaptation/screenplay_format_v0.5.md`；改编与节奏见该模块 README。
 - 必要资产判断：`modules/asset_analysis/decision_method_v0.2.md`
-- 制符：`modules/rune_generation/README.md`、`modules/rune_generation/asset_prompt_format_v0.5.md`
+- 制符：`modules/rune_generation/README.md`、`modules/rune_generation/asset_prompt_format_v0.5.md`；写人设前读 `modules/rune_generation/character_differentiation_v0.1.md`。
 - 分镜组：`modules/shot_design/vertical_short_drama_shot_v0.2.md`
 - 视频提示词：`modules/prompt_engine/README.md` 及所选模式
 - Vidu 闲时执行：`modules/model_adapter/vidu_nopeak_v0.1.md`

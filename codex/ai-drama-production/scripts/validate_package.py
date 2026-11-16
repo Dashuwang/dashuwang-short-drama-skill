@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 import re
 import sys
@@ -12,6 +13,54 @@ from pathlib import Path
 def load_json(path: Path):
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def check_character_examples(root: Path, errors: list[str]) -> None:
+    fields = (
+        "人物ID,角色名,身份,性别,视觉年龄,身高厘米,脸型与下颌,颧骨,眉形,眼形与眼距,鼻形,唇形,"
+        "肤色与年龄感,身材体态,发型,默认服装与鞋履,易混人物ID,主要区分点,原著或底稿依据,"
+        "制作设定说明,人设母版版本,对照状态"
+    ).split(",")
+    template = root / "templates/character_differentiation.template.csv"
+    example = root / "examples/character_differentiation.example.csv"
+    prompts = root / "examples/character_differentiation_prompts.md"
+    standard = root / "modules/rune_generation/asset_prompt_format_v0.5.md"
+    if not all(path.is_file() for path in (template, example, prompts, standard)):
+        return
+    rows = []
+    for path in (template, example):
+        if not path.read_bytes().startswith(b"\xef\xbb\xbf"):
+            errors.append(f"CSV missing UTF-8 BOM: {path.name}")
+        with path.open(encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            if reader.fieldnames != fields:
+                errors.append(f"CSV header differs from character contract: {path.name}")
+                return
+            rows = list(reader)
+        if path == template and rows:
+            errors.append("Blank character CSV template must not contain example rows")
+    ids = {row["人物ID"] for row in rows}
+    if len(rows) != 2 or len(ids) != 2 or any(
+        None in row or any(not row[field] for field in fields)
+        or row["易混人物ID"] not in ids - {row["人物ID"]}
+        or row["对照状态"] != "已完成文字对照" for row in rows
+    ):
+        errors.append("Character demo must contain two complete reciprocal comparison rows")
+        return
+    if rows[0]["默认服装与鞋履"] != rows[1]["默认服装与鞋履"] or not all(
+        rows[0][field] != rows[1][field] for field in ("脸型与下颌", "眼形与眼距", "身材体态")
+    ):
+        errors.append("Character demo must contrast facial/body anchors without changing uniform")
+    section_names = re.findall(r"^\d+\. `(【[^】]+】)`", standard.read_text(encoding="utf-8"), re.M)
+    blocks = re.findall(r"^```text\n(.*?)^```", prompts.read_text(encoding="utf-8"), re.M | re.S)
+    if len(section_names) != 20 or len(blocks) != len(rows):
+        errors.append("Missing complete 20-section prompts for character demo")
+        return
+    for row, block in zip(rows, blocks):
+        if re.findall(r"^【[^】]+】", block, re.M) != section_names or not all(
+            row[key] in block for key in ("人物ID", "角色名", "视觉年龄", "身高厘米")
+        ) or any(token in block for token in ("参见差异表", "同上")):
+            errors.append(f"Incomplete standalone character prompt: {row['人物ID']}")
 
 
 def main() -> int:
@@ -31,6 +80,10 @@ def main() -> int:
         "assets/project-intake.html",
         "modules/adaptation/screenplay_format_v0.5.md",
         "modules/rune_generation/asset_prompt_format_v0.5.md",
+        "modules/rune_generation/character_differentiation_v0.1.md",
+        "templates/character_differentiation.template.csv",
+        "examples/character_differentiation.example.csv",
+        "examples/character_differentiation_prompts.md",
         "references/end-to-end-production-flow-v0.4.md",
         "references/proven-production-rules-v0.4.md",
         "references/work-status-copy-v0.1.md",
@@ -64,8 +117,8 @@ def main() -> int:
                 errors.append(f"SKILL.md missing core stage: {phrase}")
 
     version_path = root / "VERSION"
-    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5-testing":
-        errors.append("VERSION must be V0.5-testing")
+    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5.1-testing":
+        errors.append("VERSION must be V0.5.1-testing")
 
     interface_path = root / "agents/openai.yaml"
     if interface_path.is_file():
@@ -164,12 +217,14 @@ def main() -> int:
         if (root / relative).exists():
             errors.append(f"obsolete file still present: {relative}")
 
+    check_character_examples(root, errors)
+
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
 
-    print("V0.5 package validation passed: screenplay, assets, clickable intake, JSON and Vidu nopeak route.")
+    print("V0.5.1 package validation passed: Excel-ready character CSVs, two complete prompts, screenplay, intake and Vidu route.")
     return 0
 
 

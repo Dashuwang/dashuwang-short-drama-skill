@@ -1,6 +1,6 @@
 # 大叔汪短剧技能包
 
-版本：`V0.5-testing` · [更新日志与升级须知](CHANGELOG.md)
+版本：`V0.5.1-testing` · [更新日志与升级须知](CHANGELOG.md)
 
 系统只保留三个核心阶段：
 
@@ -9,6 +9,8 @@
 3. 使用剧本与已确认符资产生成视频提示词，并按选择接入 Vidu Q4 闲时创作或 Seedance 平台路线。
 
 V0.5 新增点选开工卡（只有一个「特别要求」输入框）、全剧总则与正式分组剧本、包含可视化声线区的新版制符规范。保留 Vidu Q4 闲时安全执行，只有实时资格有效且精确 0 积分才能提交，不提供收费兜底。
+
+V0.5.1 将「人物脸型与身材差异表」固定为第二阶段的前置交付：盘点独立人物资产后先交全剧 CSV，横向核对骨相、五官比例和体态，再写每人的完整人设提示词。续作按稳定 ID 在同一主表补行；有成图才做并排视觉对照。
 
 工作期间会按真实阶段显示“大叔汪干活碎碎念”：以上班族、冷笑话、片场和电脑等待为主，少量穿插生活与吃喝吐槽；不展示隐藏推理，也不使用玩笑虚报进度。
 
@@ -36,6 +38,8 @@ V0.5 新增点选开工卡（只有一个「特别要求」输入框）、全剧
 
 制作与交付标准：[正式剧本格式](codex/ai-drama-production/modules/adaptation/screenplay_format_v0.5.md) · [新版制符格式](codex/ai-drama-production/modules/rune_generation/asset_prompt_format_v0.5.md) · [开工卡与路由](codex/ai-drama-production/references/project-intake-and-routing-v0.5.md)。
 
+人物差异交付：[流程与验收](codex/ai-drama-production/modules/rune_generation/character_differentiation_v0.1.md) · [空白 CSV 模板](codex/ai-drama-production/templates/character_differentiation.template.csv) · [两人差异表示例](codex/ai-drama-production/examples/character_differentiation.example.csv) · [两份完整人设提示词](codex/ai-drama-production/examples/character_differentiation_prompts.md)。
+
 ### WorkBuddy / Agent Skills 通用版
 
 目录：`workbuddy-universal/ai-drama-production/`
@@ -52,8 +56,8 @@ WorkBuddy 项目级安装：复制到项目目录：
 
 ## ZIP 包
 
-- [Codex V0.5-testing](dist/大叔汪短剧技能包-Codex-V0.5-testing.zip)
-- [WorkBuddy 通用版 V0.5-testing](dist/大叔汪短剧技能包-WorkBuddy通用版-V0.5-testing.zip)
+- [Codex V0.5.1-testing](dist/大叔汪短剧技能包-Codex-V0.5.1-testing.zip)
+- [WorkBuddy 通用版 V0.5.1-testing](dist/大叔汪短剧技能包-WorkBuddy通用版-V0.5.1-testing.zip)
 
 升级已有安装时，先备份旧版，再用对应发行包更新同名 `ai-drama-production` 目录；不要另装一个同名副本。已确认的旧剧本、符图和提示词不会自动迁移或重生。
 
