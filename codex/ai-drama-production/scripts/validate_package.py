@@ -81,6 +81,9 @@ def main() -> int:
         "modules/adaptation/screenplay_format_v0.5.md",
         "modules/rune_generation/asset_prompt_format_v0.5.md",
         "modules/rune_generation/character_differentiation_v0.1.md",
+        "modules/prompt_engine/self_prompt_v0.2/method.md",
+        "modules/prompt_engine/self_prompt_v0.2/integration.md",
+        "modules/prompt_engine/self_prompt_v0.2/dialogue_demo.md",
         "templates/character_differentiation.template.csv",
         "examples/character_differentiation.example.csv",
         "examples/character_differentiation_prompts.md",
@@ -119,8 +122,8 @@ def main() -> int:
                 errors.append(f"SKILL.md missing core stage: {phrase}")
 
     version_path = root / "VERSION"
-    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5.3-testing":
-        errors.append("VERSION must be V0.5.3-testing")
+    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5.4-testing":
+        errors.append("VERSION must be V0.5.4-testing")
 
     interface_path = root / "agents/openai.yaml"
     if interface_path.is_file():
@@ -193,6 +196,36 @@ def main() -> int:
                 or route.get("requires_audible_native_audio") is not True):
             errors.append("model_adapter must require the direct-only native-audio gate")
 
+    engine_manifest_path = root / "modules/prompt_engine/manifest.json"
+    if engine_manifest_path.is_file():
+        engine = load_json(engine_manifest_path)
+        routes = engine.get("routes", {})
+        self_route = routes.get("self", {})
+        if (self_route.get("engine_version") != "self_prompt_engine_V0.2"
+                or self_route.get("output_sections") != ["镜头编号", "资产", "全局设定", "提示词"]):
+            errors.append("Default Self route must use V0.2 with the unchanged four sections")
+        for key, filename in (("entrypoint", "method.md"), ("integration", "integration.md"),
+                              ("dialogue_demo", "dialogue_demo.md")):
+            target = f"self_prompt_v0.2/{filename}"
+            if self_route.get(key) != target or not (engine_manifest_path.parent / target).is_file():
+                errors.append(f"Self V0.2 route missing: {key}")
+            if not (engine_manifest_path.parent / "self_prompt_v0.1" / filename).is_file():
+                errors.append(f"Historical Self V0.1 missing: {filename}")
+        for mode in ("control", "td", "dual"):
+            if (routes.get(mode, {}).get("status") != "reserved"
+                    or routes.get(mode, {}).get("entrypoint") is not None):
+                errors.append(f"Unimplemented route must remain reserved: {mode}")
+        demo_path = engine_manifest_path.parent / "self_prompt_v0.2/dialogue_demo.md"
+        if demo_path.is_file():
+            blocks = re.findall(r"^```text\n(.*?)^```", demo_path.read_text(encoding="utf-8"), re.M | re.S)
+            if (len(blocks) != 1 or re.findall(r"^【([^】]+)】", blocks[0], re.M)
+                    != self_route.get("output_sections")):
+                errors.append("Self V0.2 demo must be one complete four-section prompt")
+
+    default_config_path = root / "config/default_config.json"
+    if default_config_path.is_file() and load_json(default_config_path).get("prompt_mode") != "self":
+        errors.append("Default configuration must route to the implemented Self engine")
+
     asset_standard_path = root / "modules/rune_generation/production_asset_standard_v0.4.md"
     if asset_standard_path.is_file():
         standard = asset_standard_path.read_text(encoding="utf-8")
@@ -230,7 +263,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         return 1
 
-    print("V0.5.3 package validation passed: character CSVs, complete prompts, screenplay, intake and Vidu direct-only gate.")
+    print("V0.5.4 package validation passed: complete character prompts, CSVs, Self V0.2 routing/demo, preserved reserved modes and Vidu direct-only gate.")
     return 0
 
 

@@ -1,6 +1,6 @@
 {
   "module_name": "rune_generation",
-  "version": "V0.5.1",
+  "version": "V0.5.4",
   "description": "按实剧格式生成独立可复制的资产符及独立技能符提示词",
   "status": "active",
   "format_entrypoint": "asset_prompt_format_v0.5.md",

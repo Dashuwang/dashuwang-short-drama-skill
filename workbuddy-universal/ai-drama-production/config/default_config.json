@@ -1,16 +1,16 @@
 {
   "version": "V0.1",
   "production_mode": "short_drama",
-  "prompt_mode": "dual",
+  "prompt_mode": "self",
   "video_model": { "name": "unselected", "version": "" },
   "shot_target_seconds": 15,
   "require_human_approval": ["story_direction", "core_characters", "core_scenes", "key_assets", "final_shots"],
   "module_versions": {
     "adaptation": "V0.1",
     "asset_analysis": "V0.1",
-    "rune_generation": "V0.1",
+    "rune_generation": "V0.5.4",
     "shot_design": "V0.1",
-    "prompt_engine": "V0.1",
+    "prompt_engine": "V0.3",
     "model_adapter": "V0.1"
   }
 }
