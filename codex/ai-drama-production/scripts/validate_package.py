@@ -90,6 +90,8 @@ def main() -> int:
         "modules/asset_analysis/decision_method_v0.2.md",
         "modules/rune_generation/production_asset_standard_v0.4.md",
         "modules/model_adapter/vidu_nopeak_v0.1.md",
+        "scripts/check_vidu_direct.py",
+        "scripts/vidu_direct_gate.md",
         "templates/project_intake.template.json",
         "templates/current.template.json",
         "config/work_status_copy_v0.1.json",
@@ -117,8 +119,8 @@ def main() -> int:
                 errors.append(f"SKILL.md missing core stage: {phrase}")
 
     version_path = root / "VERSION"
-    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5.1-testing":
-        errors.append("VERSION must be V0.5.1-testing")
+    if version_path.is_file() and version_path.read_text(encoding="utf-8").strip() != "V0.5.3-testing":
+        errors.append("VERSION must be V0.5.3-testing")
 
     interface_path = root / "agents/openai.yaml"
     if interface_path.is_file():
@@ -186,6 +188,10 @@ def main() -> int:
         route = adapter.get("routes", {}).get("vidu_nopeak", {})
         if adapter.get("status") != "testing" or route.get("entrypoint") != "vidu_nopeak_v0.1.md":
             errors.append("model_adapter Vidu nopeak route is missing or inactive")
+        if (route.get("preflight_gate") != "scripts/check_vidu_direct.py"
+                or route.get("allowed_transports") != ["frame_direct", "vidu_cli_direct"]
+                or route.get("requires_audible_native_audio") is not True):
+            errors.append("model_adapter must require the direct-only native-audio gate")
 
     asset_standard_path = root / "modules/rune_generation/production_asset_standard_v0.4.md"
     if asset_standard_path.is_file():
@@ -224,7 +230,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         return 1
 
-    print("V0.5.1 package validation passed: Excel-ready character CSVs, two complete prompts, screenplay, intake and Vidu route.")
+    print("V0.5.3 package validation passed: character CSVs, complete prompts, screenplay, intake and Vidu direct-only gate.")
     return 0
 
 

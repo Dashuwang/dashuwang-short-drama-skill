@@ -18,4 +18,4 @@
 
 开工卡导出 `format: dashuwang_drama_intake_v0.5`、`answers` 和 `special_requirements`。核对项目原著与选项，映射到 `templates/project_intake.template.json`（例如 `source_scope → source.scope`、`rights_boundary → source.rights_boundary`）；`special`、`selected`、平台 `other` 读唯一的特别要求，先解决实际边界，再写已确认配置。把「不要 BGM」等跨集要求放入剧本总则；单集例外写到对应集。禁止把特别要求当作未核实的执行权限。
 
-Vidu 闲时必须实时核对资格、0 积分与额度；Seedance 当前按已选平台交提示词及预检；只交提示词不调用生成。开工卡通过不替代试写、关键资产、首组与费用确认。沿用剧本／模型请求／实际回片／成片四层时长记录。
+Vidu 闲时只走直连，不操作网页，提交前同时核对原音输出证据、实时零费和正额度；Seedance 当前按已选平台交提示词及预检；只交提示词不调用生成。开工卡通过不替代试写、关键资产、首组与费用确认。沿用剧本／模型请求／实际回片／成片四层时长记录。

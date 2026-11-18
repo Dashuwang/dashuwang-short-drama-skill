@@ -11,7 +11,10 @@
     "vidu_nopeak": {
       "status": "testing",
       "adapter_version": "vidu_nopeak_V0.1",
-      "entrypoint": "vidu_nopeak_v0.1.md"
+      "entrypoint": "vidu_nopeak_v0.1.md",
+      "preflight_gate": "scripts/check_vidu_direct.py",
+      "allowed_transports": ["frame_direct", "vidu_cli_direct"],
+      "requires_audible_native_audio": true
     },
     "seedance": {
       "status": "reserved",
